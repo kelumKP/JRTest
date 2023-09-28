@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JRAppAPI", "JRAppAPI\JRAppA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JRAppAPI.Test", "JRAppAPI.Test\JRAppAPI.Test.csproj", "{60AFE867-F6ED-4719-B1DA-AEE55BDCB9E3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshots", "screenshots", "{94401D4C-0B5A-4F3D-800D-46F8BA81F240}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
