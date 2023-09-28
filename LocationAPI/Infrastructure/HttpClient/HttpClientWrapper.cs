@@ -40,13 +40,13 @@ namespace LocationAPI.Infrastructure.HttpClient
             catch (HttpRequestException ex)
             {
                 // Handle HTTP request errors (e.g., network issues).
-                // You can log the error or throw a custom exception here.
+                // log the error or throw a custom exception here.
                 throw new Exception("HTTP request failed.", ex);
             }
             catch (Exception ex)
             {
                 // Handle other exceptions.
-                // You can log the error or throw a custom exception here.
+                // log the error or throw a custom exception here.
                 throw new Exception("An error occurred while making the HTTP request.", ex);
             }
         }

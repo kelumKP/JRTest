@@ -29,8 +29,8 @@ namespace LocationAPI.Services
         {
             try
             {
-                // You can add additional logic here if needed
-                // For example, you might want to validate the IP address format or handle errors.
+                // add additional logic here if needed
+                // For example, might want to validate the IP address format or handle errors.
 
                 // Delegate the actual location retrieval to the repository asynchronously.
                 return await _locationRepository.GetLocationByIpAddressAsync(ipAddress);
@@ -39,7 +39,7 @@ namespace LocationAPI.Services
             {
                 // Handle exceptions here.
                 _logger.LogError($"An error occurred: {ex.Message}");
-                // You can log the exception and return a default location model or rethrow the exception.
+                // log the exception and return a default location model or rethrow the exception.
                 // For example, return null for simplicity.
                 return null;
             }

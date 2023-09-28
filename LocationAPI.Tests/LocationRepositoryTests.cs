@@ -27,7 +27,7 @@ namespace LocationAPI.Tests
             _httpClientWrapperMock = new Mock<IHttpClientWrapper>();
             _loggerMock = new Mock<ILogger<LocationRepository>>();
 
-            // Create an instance of AppSettings with your desired values
+            // Create an instance of AppSettings with desired values
             var appSettings = new AppSettings
             {
                 IpStackApiKey = "355be62c4160640834927af2d74e2ab6",
@@ -80,7 +80,7 @@ namespace LocationAPI.Tests
             var appSettings = new AppSettings
             {
                 IpStackApiKey = "355be62c4160640834927af2d74e2ab6",
-                IpStackApiUrl = "http://api.ipstack.com/" // Replace with your API URL
+                IpStackApiUrl = "http://api.ipstack.com/"
             };
 
             // Act
@@ -106,7 +106,7 @@ namespace LocationAPI.Tests
             var appSettings = new AppSettings
             {
                 IpStackApiKey = "355be62c4160640834927af2d74e2ab6",
-                IpStackApiUrl = "http://api.ipstack.com/" // Replace with your API URL
+                IpStackApiUrl = "http://api.ipstack.com/"
             };
 
             var appSettingsOptions = Options.Create(appSettings);

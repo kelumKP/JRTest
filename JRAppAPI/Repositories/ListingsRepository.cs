@@ -69,9 +69,9 @@ namespace JRAppAPI.Repositories
             catch (HttpRequestException ex)
             {
                 // Handle the HTTP request exception here (e.g., log and respond appropriately)
-                // For example, you can log the error and return an empty list or throw a custom exception.
+                // For example, log the error and return an empty list or throw a custom exception.
                 _logger.LogError(ex, "Error while making HTTP request.");
-                return new List<Listing>(); // Return an empty list or handle it based on your application's requirements.
+                return new List<Listing>(); // Return an empty list or handle it based on application's requirements.
             }
             catch (Exception ex)
             {

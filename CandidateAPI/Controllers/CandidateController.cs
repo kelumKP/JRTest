@@ -48,7 +48,7 @@ namespace CandidateAPI.Controllers
                 _logger.LogError(ex, "An error occurred while retrieving candidate information");
 
                 // Handle the exception and return an appropriate error response
-                return StatusCode(500, "An error occurred while processing your request");
+                return StatusCode(500, "An error occurred while processing request");
             }
         }
 

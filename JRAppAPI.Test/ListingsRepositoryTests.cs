@@ -194,7 +194,6 @@
                         Assert.NotNull(filteredAndSorted);
                         Assert.Equal(4, filteredAndSorted.Count);
                         Assert.IsType<List<Listing>>(filteredAndSorted);
-                        // Add more assertions based on your specific requirements
                     }
 
                     [Fact]

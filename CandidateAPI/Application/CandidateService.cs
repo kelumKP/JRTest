@@ -26,7 +26,7 @@ namespace CandidateAPI.Application
         {
             try
             {
-                // Implement your business logic here
+                // Implement business logic here
                 return new Candidate
                 {
                     Name = "test",

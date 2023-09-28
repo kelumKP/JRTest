@@ -48,7 +48,7 @@ namespace JRAppAPI.Controllers
                 _logger.LogError(ex, "Error occurred while retrieving listings for {Passengers} passengers", passengers);
 
                 // Return error response
-                return StatusCode(500, "An error occurred while processing your request.");
+                return StatusCode(500, "An error occurred while processing request.");
             }
         }
     }

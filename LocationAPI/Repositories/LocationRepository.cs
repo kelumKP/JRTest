@@ -60,7 +60,7 @@ namespace LocationAPI.Repositories
                 {
                     // Handle non-successful HTTP status codes here.
                     _logger.LogError($"HTTP request failed with status code {response.StatusCode}");
-                    // You can log the error, throw an exception, or return a default location model.
+                    // log the error, throw an exception, or return a default location model.
                     // For example, return null for simplicity.
                     return null;
                 }
@@ -69,7 +69,7 @@ namespace LocationAPI.Repositories
             {
                 // Handle exceptions here.
                 _logger.LogError($"An error occurred: {ex.Message}");
-                // You can log the exception and return a default location model or rethrow the exception.
+                // log the exception and return a default location model or rethrow the exception.
                 // For example, return null for simplicity.
                 return null;
             }
