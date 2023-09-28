@@ -3,11 +3,16 @@ using CandidateAPI.Application;
 using CandidateAPI.Controllers;
 using CandidateAPI.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
 namespace CandidateAPI.Tests
 {
+    /// <summary>
+    /// Author: Kelum
+    /// License: MIT
+    /// </summary>
     public class CandidateControllerTests
     {
         [Fact]
@@ -18,7 +23,9 @@ namespace CandidateAPI.Tests
             var expectedCandidate = new Candidate { Name = "test", Phone = "test" };
             candidateServiceMock.Setup(service => service.GetCandidateInfo()).Returns(expectedCandidate);
 
-            var controller = new CandidateController(candidateServiceMock.Object);
+            var loggerMock = new Mock<ILogger<CandidateController>>(); // Mock ILogger
+
+            var controller = new CandidateController(candidateServiceMock.Object, loggerMock.Object);
 
             // Act
             var result = controller.GetCandidateInfo();
@@ -31,3 +38,4 @@ namespace CandidateAPI.Tests
         }
     }
 }
+
