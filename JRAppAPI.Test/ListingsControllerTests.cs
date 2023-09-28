@@ -1,13 +1,17 @@
-﻿using JRAppAPI.Controllers;
+﻿/*
+ * File Author: Kelum
+ * License: MIT
+ */
+
+using JRAppAPI.Controllers;
 using JRAppAPI.Models;
 using JRAppAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace JRAppAPI.Test
 {
@@ -19,7 +23,12 @@ namespace JRAppAPI.Test
             // Arrange
             var passengers = 2;
             var mockService = new Mock<IListingService>();
-            var controller = new ListingsController(mockService.Object);
+
+            // Create a mock for ILogger<ListingsController>
+            var mockLogger = new Mock<ILogger<ListingsController>>();
+
+            // Pass the mock ILogger to the ListingsController constructor
+            var controller = new ListingsController(mockService.Object, mockLogger.Object);
 
             var listings = new List<Listing>
             {
@@ -38,9 +47,9 @@ namespace JRAppAPI.Test
 
             var model = result.Value as List<Listing>;
             Assert.NotNull(model);
-            Assert.Equal(2, model.Count); // Ensure the correct number of listings is returned
+            Assert.Equal(2, model.Count);
         }
-
-
     }
 }
+
+
