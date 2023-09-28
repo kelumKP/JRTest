@@ -1,6 +1,6 @@
 #### JRTest
 
-by right click Web Api project for each task, change the startup project
+by right clicking Web Api project for each task, change the startup project or set it as multiple startup projects
 
 ![Alt text](screenshots/solution.png)
 
