@@ -4,24 +4,25 @@ using LocationAPI.Repositories;
 using LocationAPI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register IHttpClientFactory
 builder.Services.AddHttpClient();
 
-// In Startup.cs, within the ConfigureServices method:
+// Register custom services
 builder.Services.AddScoped<IHttpClientWrapper, HttpClientWrapper>();
-
-// Register your services
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 
@@ -44,3 +45,25 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Exception handling
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = 500; // Internal Server Error
+        context.Response.ContentType = "application/json";
+
+        var exceptionHandlerFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+        if (exceptionHandlerFeature != null)
+        {
+            // Log the exception
+            var exception = exceptionHandlerFeature.Error;
+            Console.WriteLine($"An unhandled exception occurred: {exception}");
+
+            // Return an error response
+            var errorMessage = new { error = "An unexpected error occurred." };
+            await context.Response.WriteAsJsonAsync(errorMessage);
+        }
+    });
+});

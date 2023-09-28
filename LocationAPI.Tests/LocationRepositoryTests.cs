@@ -1,6 +1,7 @@
 ﻿using LocationAPI.Infrastructure.HttpClient;
 using LocationAPI.Models;
 using LocationAPI.Repositories;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Newtonsoft.Json;
@@ -16,6 +17,29 @@ namespace LocationAPI.Tests
     [TestClass]
     public class LocationRepositoryTests
     {
+        private LocationRepository _repository;
+        private Mock<IHttpClientWrapper> _httpClientWrapperMock;
+        private Mock<ILogger<LocationRepository>> _loggerMock;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _httpClientWrapperMock = new Mock<IHttpClientWrapper>();
+            _loggerMock = new Mock<ILogger<LocationRepository>>();
+
+            // Create an instance of AppSettings with your desired values
+            var appSettings = new AppSettings
+            {
+                IpStackApiKey = "355be62c4160640834927af2d74e2ab6",
+                IpStackApiUrl = "http://api.ipstack.com/"
+            };
+
+            var appSettingsOptions = Options.Create(appSettings);
+
+            // Create an instance of LocationRepository
+            _repository = new LocationRepository(appSettingsOptions, _httpClientWrapperMock.Object, _loggerMock.Object);
+        }
+
         [TestMethod]
         public async Task GetLocationByIpAddressAsync_ValidIpAddress_ReturnsLocation()
         {
@@ -27,35 +51,23 @@ namespace LocationAPI.Tests
                 country_name = "United States",
                 latitude = 34.04759979248047f,
                 longitude = -118.29226684570312f
-                // Add other properties as needed
             };
 
-            var httpClientWrapperMock = new Mock<IHttpClientWrapper>();
-            httpClientWrapperMock.Setup(client => client.GetAsync(It.IsAny<string>()))
+            // Set up the mock to return the expected response
+            _httpClientWrapperMock.Setup(client => client.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(JsonConvert.SerializeObject(expectedLocation))
                 });
 
-            var appSettings = new AppSettings
-            {
-                IpStackApiKey = "355be62c4160640834927af2d74e2ab6",
-                IpStackApiUrl = "http://api.ipstack.com/" // Replace with your API URL
-            };
-
-            var appSettingsOptions = Options.Create(appSettings);
-
-            var repository = new LocationRepository(appSettingsOptions, httpClientWrapperMock.Object); // Inject IHttpClientWrapper
-
             // Act
-            var location = await repository.GetLocationByIpAddressAsync(ipAddress);
+            var location = await _repository.GetLocationByIpAddressAsync(ipAddress);
 
             // Assert
             Assert.IsNotNull(location);
             Assert.AreEqual(expectedLocation.city, location.City);
             Assert.AreEqual(expectedLocation.country_name, location.Country);
-            // Assert other properties as needed
         }
 
         [TestMethod]
@@ -71,12 +83,8 @@ namespace LocationAPI.Tests
                 IpStackApiUrl = "http://api.ipstack.com/" // Replace with your API URL
             };
 
-            var appSettingsOptions = Options.Create(appSettings);
-
-            var repository = new LocationRepository(appSettingsOptions, httpClientWrapperMock.Object);
-
             // Act
-            var location = await repository.GetLocationByIpAddressAsync(ipAddress);
+            var location = await _repository.GetLocationByIpAddressAsync(ipAddress);
 
             // Assert
             Assert.IsNull(location);
@@ -103,10 +111,8 @@ namespace LocationAPI.Tests
 
             var appSettingsOptions = Options.Create(appSettings);
 
-            var repository = new LocationRepository(appSettingsOptions, httpClientWrapperMock.Object);
-
             // Act
-            var location = await repository.GetLocationByIpAddressAsync(ipAddress);
+            var location = await _repository.GetLocationByIpAddressAsync(ipAddress);
 
             // Assert
             Assert.IsNull(location);

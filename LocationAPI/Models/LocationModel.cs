@@ -2,6 +2,9 @@
 
 namespace LocationAPI.Models
 {
+    /// <summary>
+    /// Represents a location model with city, country, latitude, and longitude.
+    /// </summary>
     public class LocationModel
     {
         [JsonPropertyName("city")]
@@ -15,5 +18,6 @@ namespace LocationAPI.Models
 
         [JsonPropertyName("longitude")]
         public float Longitude { get; set; }
+
     }
 }
